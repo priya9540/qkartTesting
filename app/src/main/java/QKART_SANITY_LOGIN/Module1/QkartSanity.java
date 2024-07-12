@@ -33,7 +33,6 @@ public class QkartSanity {
         final DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setBrowserName(BrowserType.CHROME);
         RemoteWebDriver driver = new RemoteWebDriver(new URL("http://localhost:8082/wd/hub"), capabilities);
-
         return driver;
     }
 
@@ -56,8 +55,7 @@ public class QkartSanity {
         registration.navigateToRegisterPage();
         status = registration.registerUser("testUser", "abc@123", true);
         if (!status) {
-            logStatus("TestCase 1", "Test Case Pass. User Registration Pass", "FAIL");
-            logStatus("End TestCase", "Test Case 1: Verify user Registration : ", status ? "PASS" : "FAIL");
+            logStatus("TestCase 1", "Test Case 1: Verify user Registration : ", status ? "PASS" : "FAIL");
 
             // Return False as the test case Fails
             return false;
@@ -122,9 +120,11 @@ public class QkartSanity {
         int totalTests = 0;
         int passedTests = 0;
         Boolean status;
+        RemoteWebDriver driver = createDriver();
         // Maximize and Implicit Wait for things to initailize
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        
 
         try {
             // Execute Test Case 1

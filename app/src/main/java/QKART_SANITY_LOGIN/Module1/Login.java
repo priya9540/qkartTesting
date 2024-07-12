@@ -55,8 +55,7 @@ public class Login {
     public Boolean VerifyUserLoggedIn(String Username) {
         try {
             // Find the username label (present on the top right of the page)
-            WebElement username_label;
-             username_label = this.driver.findElement(By.id("username-text"));
+            WebElement username_label = this.driver.findElement(By.className("username-text"));
             return username_label.getText().equals(Username);
         } catch (Exception e) {
             return false;
