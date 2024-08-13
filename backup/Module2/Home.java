@@ -2,7 +2,7 @@ package QKART_SANITY_LOGIN.Module1;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.lang.model.element.Element;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -29,7 +29,6 @@ public class Home {
             WebElement logout_button = driver.findElement(By.className("MuiButton-text"));
             logout_button.click();
 
-            // SLEEP_STMT_10: Wait for Logout to complete
             // Wait for Logout to Complete
             Thread.sleep(3000);
 
@@ -52,13 +51,6 @@ public class Home {
             searchBox.clear();
             searchBox.sendKeys(product);
             Thread.sleep(5000);
-
-            WebDriverWait wait = new WebDriverWait(driver, 10);
-            wait.until(ExpectedConditions.or(
-                    ExpectedConditions.visibilityOfElementLocated(
-                            By.xpath("//div[@class='MuiCardContent-root css-1qw96cp']")),
-                    ExpectedConditions.visibilityOfElementLocated(
-                            By.xpath("//h4[text()=' No products found ']"))));
             return true;
         } catch (Exception e) {
             System.out.println("Error while searching for a product: " + e.getMessage());
@@ -114,6 +106,7 @@ public class Home {
      */
     public Boolean addProductToCart(String productName) {
         try {
+            // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 05: MILESTONE 4
             /*
              * Iterate through each product on the page to find the WebElement corresponding to the
              * matching productName
@@ -185,44 +178,31 @@ public class Home {
             for (WebElement parentElement : parentElements) {
                 WebElement itemOnTheCartElement = parentElement.findElement(By.xpath("./div[1]"));
                 String itemOnTheCartText = itemOnTheCartElement.getText();
-                // String OrirginalquantityText = Integer.toString(quantity);
                 if (itemOnTheCartText.equals(productName)) {
-                    while (true) {
-                        WebElement quantityElement = parentElement
-                                .findElement(By.xpath(".//div[@data-testid='item-qty']"));
-                        String quantityText = quantityElement.getText();
-                        int quantityNo = Integer.parseInt(quantityText);
-                        if (quantityNo > quantity) {
-                            WebElement decrementElement = parentElement.findElement(
-                                    By.xpath(".//*[@data-testid='RemoveOutlinedIcon']"));
-                            decrementElement.click();
-                            String decrementedElementedText = Integer.toString(quantityNo - 1);
+                    while(true){
+                    WebElement quantityElement = parentElement
+                            .findElement(By.xpath(".//div[@data-testid='item-qty']"));
+                    String quantityText = quantityElement.getText();
+                    int quantityNo = Integer.parseInt(quantityText);
+                    if (quantityNo > quantity) {
+                        WebElement decrementElement = parentElement
+                                .findElement(By.xpath(".//*[@data-testid='RemoveOutlinedIcon']"));
+                        decrementElement.click();
+                        Thread.sleep(2000);
 
-                            WebDriverWait wait = new WebDriverWait(driver, 5);
-                            wait.until(ExpectedConditions.textToBePresentInElement(quantityElement,
-                                    decrementedElementedText));
-
-
-
-                            // Thread.sleep(2000);
-
-                        } else if (quantityNo < quantity) {
-                            WebElement incrementElement = parentElement
-                                    .findElement(By.xpath(".//*[@data-testid='AddOutlinedIcon']"));
-                            incrementElement.click();
-                            // Thread.sleep(2000);
-                            String incrementedElementedText = Integer.toString(quantityNo + 1);
-                            WebDriverWait wait = new WebDriverWait(driver, 5);
-                            wait.until(ExpectedConditions.textToBePresentInElement(quantityElement,
-                                    incrementedElementedText));
-
-                        } else if (quantityNo == quantity) {
-                            break;
-                        }
-
+                    } else if (quantityNo < quantity) {
+                        WebElement incrementElement = parentElement
+                                .findElement(By.xpath(".//*[@data-testid='AddOutlinedIcon']"));
+                                incrementElement.click();    
+                                Thread.sleep(2000);    
                     }
+                    else if (quantityNo == quantity){
+                        break;
+                    }
+
                 }
             }
+        }
 
             return true;
         } catch (Exception e) {

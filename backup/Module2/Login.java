@@ -46,22 +46,8 @@ public class Login {
         // Click the login Button
         login_button.click();
 
-        // SLEEP_STMT_13: Wait for Login to Complete
         // Wait for Login action to complete
-        // Thread.sleep(5000);
-        FluentWait<WebDriver> wait =
-                new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(30)) // Maximum
-                                                                                      // wait time
-                        .pollingEvery(Duration.ofMillis(250)) // Frequency of checks
-                        .ignoring(NoSuchElementException.class);
-        boolean isLoginInvisible =
-                wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("button")));
-
-        if (isLoginInvisible) {
-            System.out.println("Login button is invisible.");
-        } else {
-            System.out.println("Login button is still visible.");
-        }
+        Thread.sleep(5000);
 
         return this.VerifyUserLoggedIn(Username);
     }

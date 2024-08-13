@@ -42,12 +42,7 @@ public class Checkout {
             String addButtonXpath = "//button[text()='Add']";
             WebElement addButtonElement = driver.findElement(By.xpath(addButtonXpath));
             addButtonElement.click();
-            //Thread.sleep(3000);
-            WebDriverWait wait = new WebDriverWait(driver, 5);
-
-            // Wait until the element is visible
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By
-                    .xpath("//div[@class='address-item not-selected MuiBox-root css-0']/div[1]")));
+            Thread.sleep(3000);
             return true;
         } catch (Exception e) {
             System.out.println("Exception occurred while entering address: " + e.getMessage());
@@ -101,8 +96,7 @@ public class Checkout {
         try {
             // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 05: MILESTONE 4
             // Find the "PLACE ORDER" button and click on it
-            WebElement placeOrderElement = driver.findElement(By.xpath(// button[text()='PLACE
-                                                                       // ORDER']
+            WebElement placeOrderElement = driver.findElement(By.xpath(//button[text()='PLACE ORDER']
                     "//button[text()='PLACE ORDER']"));
             placeOrderElement.click();
             Thread.sleep(3000);
@@ -122,27 +116,24 @@ public class Checkout {
     public Boolean verifyInsufficientBalanceMessage() {
         try {
             // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 07: MILESTONE 6
-            WebElement placeOrderElement = driver.findElement(By.xpath(// button[text()='PLACE
-                                                                       // ORDER']
+            WebElement placeOrderElement = driver.findElement(By.xpath(//button[text()='PLACE ORDER']
                     "//button[text()='PLACE ORDER']"));
             placeOrderElement.click();
             Thread.sleep(1000);
-
-
-            WebElement popup = driver.findElement(By.id("notistack-snackbar")); // Replace with
-                                                                                // actual locator
-            String popupText = popup.getText();
-            System.out.println("Popup text: " + popupText);
-            if (popup.isDisplayed()) {
-                if (popupText.equals(
-                        "You do not have enough balance in your wallet for this purchase")) {
-
+           
+                
+                    WebElement popup = driver.findElement(By.id("notistack-snackbar"));  // Replace with actual locator
+                    String popupText = popup.getText();
+                    System.out.println("Popup text: " + popupText);
+                    if (popup.isDisplayed()) {
+                    if(popupText.equals("You do not have enough balance in your wallet for this purchase")){
+                   
                     return true;
-                }
-            }
-
-
-
+                    }
+                  }
+                    
+                
+                
             return false;
         } catch (Exception e) {
             System.out.println(
